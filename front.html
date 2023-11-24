@@ -1,0 +1,139 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 600px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "group": 1, "id": "col_1", "label": "col_1", "level": 1, "physics": true, "shape": "dot", "title": "col_1 Neighbors: col_3, col_7, col_5, col_20, col_9, col_2, col_15, col_4, col_6, col_16, col_8", "value": 11}, {"font": {"color": "white"}, "group": 6, "id": "col_15", "label": "col_15", "level": 6, "physics": true, "shape": "dot", "title": "col_15 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_16", "label": "col_16", "level": 6, "physics": true, "shape": "dot", "title": "col_16 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 1, "id": "col_2", "label": "col_2", "level": 1, "physics": true, "shape": "dot", "title": "col_2 Neighbors: col_17", "value": 1}, {"font": {"color": "white"}, "group": 6, "id": "col_20", "label": "col_20", "level": 6, "physics": true, "shape": "dot", "title": "col_20 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 1, "id": "col_3", "label": "col_3", "level": 1, "physics": true, "shape": "dot", "title": "col_3 Neighbors: col_13, col_11", "value": 2}, {"font": {"color": "white"}, "group": 3, "id": "col_4", "label": "col_4", "level": 3, "physics": true, "shape": "dot", "title": "col_4 Neighbors: col_20, col_12, col_19, col_17, col_14, col_13", "value": 6}, {"font": {"color": "white"}, "group": 3, "id": "col_5", "label": "col_5", "level": 3, "physics": true, "shape": "dot", "title": "col_5 Neighbors: col_18, col_15, col_20, col_11", "value": 4}, {"font": {"color": "white"}, "group": 3, "id": "col_6", "label": "col_6", "level": 3, "physics": true, "shape": "dot", "title": "col_6 Neighbors: col_12, col_19, col_14, col_15, col_16, col_11", "value": 6}, {"font": {"color": "white"}, "group": 4, "id": "col_7", "label": "col_7", "level": 4, "physics": true, "shape": "dot", "title": "col_7 Neighbors: col_20, col_18, col_19, col_16, col_11", "value": 5}, {"font": {"color": "white"}, "group": 4, "id": "col_8", "label": "col_8", "level": 4, "physics": true, "shape": "dot", "title": "col_8 Neighbors: col_19, col_16, col_17, col_15", "value": 4}, {"font": {"color": "white"}, "group": 5, "id": "col_9", "label": "col_9", "level": 5, "physics": true, "shape": "dot", "title": "col_9 Neighbors: col_14, col_12", "value": 2}, {"font": {"color": "white"}, "group": 2, "id": "col_10", "label": "col_10", "level": 2, "physics": true, "shape": "dot", "title": "col_10 Neighbors: col_16, col_14", "value": 2}, {"font": {"color": "white"}, "group": 6, "id": "col_14", "label": "col_14", "level": 6, "physics": true, "shape": "dot", "title": "col_14 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_17", "label": "col_17", "level": 6, "physics": true, "shape": "dot", "title": "col_17 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_11", "label": "col_11", "level": 6, "physics": true, "shape": "dot", "title": "col_11 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_13", "label": "col_13", "level": 6, "physics": true, "shape": "dot", "title": "col_13 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_12", "label": "col_12", "level": 6, "physics": true, "shape": "dot", "title": "col_12 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_19", "label": "col_19", "level": 6, "physics": true, "shape": "dot", "title": "col_19 Neighbors: ", "value": 0}, {"font": {"color": "white"}, "group": 6, "id": "col_18", "label": "col_18", "level": 6, "physics": true, "shape": "dot", "title": "col_18 Neighbors: ", "value": 0}]);
+        edges = new vis.DataSet([{"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_15 symmetry: 39%", "to": "col_15", "value": 39}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_16 symmetry: 71%", "to": "col_16", "value": 71}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_2 symmetry: 100%", "to": "col_2", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_20 symmetry: 100%", "to": "col_20", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_3 symmetry: 100%", "to": "col_3", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_4 symmetry: 100%", "to": "col_4", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_5 symmetry: 100%", "to": "col_5", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_6 symmetry: 100%", "to": "col_6", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_7 symmetry: 100%", "to": "col_7", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_8 symmetry: 100%", "to": "col_8", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_1", "physics": true, "title": "col_1 to col_9 symmetry: 100%", "to": "col_9", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_10", "physics": true, "title": "col_10 to col_14 symmetry: 23%", "to": "col_14", "value": 23}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_10", "physics": true, "title": "col_10 to col_16 symmetry: 55%", "to": "col_16", "value": 55}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_2", "physics": true, "title": "col_2 to col_17 symmetry: 28%", "to": "col_17", "value": 28}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_3", "physics": true, "title": "col_3 to col_11 symmetry: 93%", "to": "col_11", "value": 93}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_3", "physics": true, "title": "col_3 to col_13 symmetry: 73%", "to": "col_13", "value": 73}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_4", "physics": true, "title": "col_4 to col_12 symmetry: 91%", "to": "col_12", "value": 91}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_4", "physics": true, "title": "col_4 to col_13 symmetry: 56%", "to": "col_13", "value": 56}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_4", "physics": true, "title": "col_4 to col_14 symmetry: 64%", "to": "col_14", "value": 64}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_4", "physics": true, "title": "col_4 to col_17 symmetry: 72%", "to": "col_17", "value": 72}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_4", "physics": true, "title": "col_4 to col_19 symmetry: 85%", "to": "col_19", "value": 85}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_4", "physics": true, "title": "col_4 to col_20 symmetry: 100%", "to": "col_20", "value": 100}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_5", "physics": true, "title": "col_5 to col_11 symmetry: 57%", "to": "col_11", "value": 57}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_5", "physics": true, "title": "col_5 to col_15 symmetry: 88%", "to": "col_15", "value": 88}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_5", "physics": true, "title": "col_5 to col_18 symmetry: 34%", "to": "col_18", "value": 34}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_5", "physics": true, "title": "col_5 to col_20 symmetry: 95%", "to": "col_20", "value": 95}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_6", "physics": true, "title": "col_6 to col_11 symmetry: 96%", "to": "col_11", "value": 96}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_6", "physics": true, "title": "col_6 to col_12 symmetry: 40%", "to": "col_12", "value": 40}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_6", "physics": true, "title": "col_6 to col_14 symmetry: 46%", "to": "col_14", "value": 46}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_6", "physics": true, "title": "col_6 to col_15 symmetry: 66%", "to": "col_15", "value": 66}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_6", "physics": true, "title": "col_6 to col_16 symmetry: 74%", "to": "col_16", "value": 74}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_6", "physics": true, "title": "col_6 to col_19 symmetry: 42%", "to": "col_19", "value": 42}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_7", "physics": true, "title": "col_7 to col_11 symmetry: 10%", "to": "col_11", "value": 10}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_7", "physics": true, "title": "col_7 to col_16 symmetry: 61%", "to": "col_16", "value": 61}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_7", "physics": true, "title": "col_7 to col_18 symmetry: 61%", "to": "col_18", "value": 61}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_7", "physics": true, "title": "col_7 to col_19 symmetry: 21%", "to": "col_19", "value": 21}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_7", "physics": true, "title": "col_7 to col_20 symmetry: 58%", "to": "col_20", "value": 58}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_8", "physics": true, "title": "col_8 to col_15 symmetry: 60%", "to": "col_15", "value": 60}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_8", "physics": true, "title": "col_8 to col_16 symmetry: 68%", "to": "col_16", "value": 68}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_8", "physics": true, "title": "col_8 to col_17 symmetry: 21%", "to": "col_17", "value": 21}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_8", "physics": true, "title": "col_8 to col_19 symmetry: 10%", "to": "col_19", "value": 10}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_9", "physics": true, "title": "col_9 to col_12 symmetry: 87%", "to": "col_12", "value": 87}, {"arrowStrikethrough": true, "arrows": "to", "from": "col_9", "physics": true, "title": "col_9 to col_14 symmetry: 6%", "to": "col_14", "value": 6}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.33,
+            "damping": 0.95,
+            "nodeDistance": 420,
+            "springConstant": 0.1,
+            "springLength": 110
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
