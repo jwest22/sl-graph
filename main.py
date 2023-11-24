@@ -1,6 +1,5 @@
 import streamlit as st
 import streamlit.components.v1 as components
-import networkx as nx
 from pyvis.network import Network
 import network_graph
 
