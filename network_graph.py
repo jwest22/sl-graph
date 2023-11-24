@@ -10,8 +10,7 @@ def network_func(physics,layout):
                         bgcolor='#222222',
                         font_color="white",
                         directed=True,
-                        layout=layout,
-                        heading=''
+                        layout=layout
                         )
   
   network_net.repulsion(

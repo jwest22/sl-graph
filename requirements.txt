@@ -1,5 +1,5 @@
 streamlit
 pandas
 matplotlib
-networkx==2.5
-pyvis==0.1.8
+networkx
+pyvis
