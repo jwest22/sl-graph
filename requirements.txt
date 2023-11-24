@@ -1,6 +1,5 @@
 streamlit
 pandas
-network_graph
 matplotlib==3.2.2
 networkx==2.5
 pyvis==0.1.8.
